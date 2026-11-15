@@ -1,0 +1,141 @@
+@url=http://localhost:3000
+
+### Login (ejecutar primero para obtener el token)
+# @name login
+POST {{url}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "benjamin@mail.com",
+    "password": "123456"
+}
+
+### Listado de vehículos
+GET {{url}}/vehiculos
+Authorization: Bearer {{login.response.body.token}}
+
+### Listado con filtro de marca
+GET {{url}}/vehiculos?marca=mer
+Authorization: Bearer {{login.response.body.token}}
+
+### Listado con filtro de patente
+GET {{url}}/vehiculos?patente=AB1
+Authorization: Bearer {{login.response.body.token}}
+
+### Detalle de vehículo
+GET {{url}}/vehiculos/1
+Authorization: Bearer {{login.response.body.token}}
+
+### Detalle de vehículo inexistente (404)
+GET {{url}}/vehiculos/9999
+Authorization: Bearer {{login.response.body.token}}
+
+### Detalle con id inválido (400)
+GET {{url}}/vehiculos/abc
+Authorization: Bearer {{login.response.body.token}}
+
+### Listado sin token (401)
+GET {{url}}/vehiculos
+
+### Crear vehículo
+POST {{url}}/vehiculos
+Authorization: Bearer {{login.response.body.token}}
+Content-Type: application/json
+
+{
+    "marca": "Mercedes Benz",
+    "modelo": "Actros",
+    "patente": "AB123CD",
+    "anio": 2020,
+    "capacidadCarga": 12000
+}
+
+### Crear otro vehículo
+POST {{url}}/vehiculos
+Authorization: Bearer {{login.response.body.token}}
+Content-Type: application/json
+
+{
+    "marca": "Scania",
+    "modelo": "R450",
+    "patente": "AC456EF",
+    "anio": 2022,
+    "capacidadCarga": 18000.5
+}
+
+### Crear con patente repetida (400)
+POST {{url}}/vehiculos
+Authorization: Bearer {{login.response.body.token}}
+Content-Type: application/json
+
+{
+    "marca": "Volvo",
+    "modelo": "FH",
+    "patente": "AB123CD",
+    "anio": 2021,
+    "capacidadCarga": 15000
+}
+
+### Crear con datos inválidos (400)
+POST {{url}}/vehiculos
+Authorization: Bearer {{login.response.body.token}}
+Content-Type: application/json
+
+{
+    "marca": "",
+    "modelo": "FH",
+    "patente": "!!",
+    "anio": 1800,
+    "capacidadCarga": -5
+}
+
+### Modificar vehículo
+PUT {{url}}/vehiculos/1
+Authorization: Bearer {{login.response.body.token}}
+Content-Type: application/json
+
+{
+    "marca": "Mercedes Benz",
+    "modelo": "Actros 2546",
+    "patente": "AB123CD",
+    "anio": 2021,
+    "capacidadCarga": 13000
+}
+
+### Modificar con patente de otro vehículo (400)
+PUT {{url}}/vehiculos/1
+Authorization: Bearer {{login.response.body.token}}
+Content-Type: application/json
+
+{
+    "marca": "Mercedes Benz",
+    "modelo": "Actros",
+    "patente": "AC456EF",
+    "anio": 2020,
+    "capacidadCarga": 12000
+}
+
+### Modificar vehículo inexistente (404)
+PUT {{url}}/vehiculos/9999
+Authorization: Bearer {{login.response.body.token}}
+Content-Type: application/json
+
+{
+    "marca": "Mercedes Benz",
+    "modelo": "Actros",
+    "patente": "ZZ999ZZ",
+    "anio": 2020,
+    "capacidadCarga": 12000
+}
+
+### Eliminar vehículo (usar un id sin viajes)
+DELETE {{url}}/vehiculos/2
+Authorization: Bearer {{login.response.body.token}}
+
+### Eliminar vehículo con viajes registrados (403, probar después de crear un viaje)
+DELETE {{url}}/vehiculos/1
+Authorization: Bearer {{login.response.body.token}}
+
+### Eliminar vehículo inexistente (404)
+DELETE {{url}}/vehiculos/9999
+Authorization: Bearer {{login.response.body.token}}
