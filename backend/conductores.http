@@ -1,0 +1,158 @@
+@url=http://localhost:3000
+
+### Login (ejecutar primero para obtener el token)
+# @name login
+POST {{url}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "benjamin@mail.com",
+    "password": "123456"
+}
+
+### Listado de conductores
+GET {{url}}/conductores
+Authorization: Bearer {{login.response.body.token}}
+
+### Listado con filtro de apellido
+GET {{url}}/conductores?apellido=per
+Authorization: Bearer {{login.response.body.token}}
+
+### Detalle de conductor
+GET {{url}}/conductores/1
+Authorization: Bearer {{login.response.body.token}}
+
+### Detalle de conductor inexistente (404)
+GET {{url}}/conductores/9999
+Authorization: Bearer {{login.response.body.token}}
+
+### Detalle con id inválido (400)
+GET {{url}}/conductores/abc
+Authorization: Bearer {{login.response.body.token}}
+
+### Listado sin token (401)
+GET {{url}}/conductores
+
+### Crear conductor
+POST {{url}}/conductores
+Authorization: Bearer {{login.response.body.token}}
+Content-Type: application/json
+
+{
+    "nombre": "Juan",
+    "apellido": "Pérez",
+    "numeroDocumento": "30123456",
+    "numeroLicencia": "LIC001",
+    "fechaAltaLicencia": "2020-03-15",
+    "fechaVencimientoLicencia": "2027-03-15"
+}
+
+### Crear otro conductor
+POST {{url}}/conductores
+Authorization: Bearer {{login.response.body.token}}
+Content-Type: application/json
+
+{
+    "nombre": "María",
+    "apellido": "Gómez",
+    "numeroDocumento": "28987654",
+    "numeroLicencia": "LIC002",
+    "fechaAltaLicencia": "2018-06-01",
+    "fechaVencimientoLicencia": "2026-06-01"
+}
+
+### Crear con documento repetido (400)
+POST {{url}}/conductores
+Authorization: Bearer {{login.response.body.token}}
+Content-Type: application/json
+
+{
+    "nombre": "Carlos",
+    "apellido": "Díaz",
+    "numeroDocumento": "30123456",
+    "numeroLicencia": "LIC003",
+    "fechaAltaLicencia": "2021-01-10",
+    "fechaVencimientoLicencia": "2028-01-10"
+}
+
+### Crear con vencimiento anterior al alta (400)
+POST {{url}}/conductores
+Authorization: Bearer {{login.response.body.token}}
+Content-Type: application/json
+
+{
+    "nombre": "Carlos",
+    "apellido": "Díaz",
+    "numeroDocumento": "31555777",
+    "numeroLicencia": "LIC004",
+    "fechaAltaLicencia": "2021-01-10",
+    "fechaVencimientoLicencia": "2020-01-10"
+}
+
+### Crear con datos inválidos (400)
+POST {{url}}/conductores
+Authorization: Bearer {{login.response.body.token}}
+Content-Type: application/json
+
+{
+    "nombre": "123",
+    "apellido": "",
+    "numeroDocumento": "abc",
+    "numeroLicencia": "!!",
+    "fechaAltaLicencia": "15/03/2020",
+    "fechaVencimientoLicencia": "ayer"
+}
+
+### Modificar conductor
+PUT {{url}}/conductores/1
+Authorization: Bearer {{login.response.body.token}}
+Content-Type: application/json
+
+{
+    "nombre": "Juan Carlos",
+    "apellido": "Pérez",
+    "numeroDocumento": "30123456",
+    "numeroLicencia": "LIC001",
+    "fechaAltaLicencia": "2020-03-15",
+    "fechaVencimientoLicencia": "2028-03-15"
+}
+
+### Modificar con licencia de otro conductor (400)
+PUT {{url}}/conductores/1
+Authorization: Bearer {{login.response.body.token}}
+Content-Type: application/json
+
+{
+    "nombre": "Juan",
+    "apellido": "Pérez",
+    "numeroDocumento": "30123456",
+    "numeroLicencia": "LIC002",
+    "fechaAltaLicencia": "2020-03-15",
+    "fechaVencimientoLicencia": "2027-03-15"
+}
+
+### Modificar conductor inexistente (404)
+PUT {{url}}/conductores/9999
+Authorization: Bearer {{login.response.body.token}}
+Content-Type: application/json
+
+{
+    "nombre": "Juan",
+    "apellido": "Pérez",
+    "numeroDocumento": "30999999",
+    "numeroLicencia": "LIC999",
+    "fechaAltaLicencia": "2020-03-15",
+    "fechaVencimientoLicencia": "2027-03-15"
+}
+
+### Eliminar conductor (usar un id sin viajes)
+DELETE {{url}}/conductores/2
+Authorization: Bearer {{login.response.body.token}}
+
+### Eliminar conductor con viajes registrados (403, probar después de crear un viaje)
+DELETE {{url}}/conductores/1
+Authorization: Bearer {{login.response.body.token}}
+
+### Eliminar conductor inexistente (404)
+DELETE {{url}}/conductores/9999
+Authorization: Bearer {{login.response.body.token}}
