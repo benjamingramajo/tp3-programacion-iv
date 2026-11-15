@@ -1,0 +1,168 @@
+@url=http://localhost:3000
+
+# Antes de probar este archivo tiene que haber al menos
+# un vehículo (id 1) y un conductor (id 1) creados.
+
+### Login (ejecutar primero para obtener el token)
+# @name login
+POST {{url}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "benjamin@mail.com",
+    "password": "123456"
+}
+
+### Registrar viaje
+POST {{url}}/viajes
+Authorization: Bearer {{login.response.body.token}}
+Content-Type: application/json
+
+{
+    "vehiculoId": 1,
+    "conductorId": 1,
+    "fechaSalida": "2026-11-10T08:00",
+    "fechaLlegada": "2026-11-10T18:30",
+    "origen": "La Rioja",
+    "destino": "Córdoba",
+    "kilometros": 450.5,
+    "observaciones": "Carga de alimentos"
+}
+
+### Registrar otro viaje (sin observaciones)
+POST {{url}}/viajes
+Authorization: Bearer {{login.response.body.token}}
+Content-Type: application/json
+
+{
+    "vehiculoId": 1,
+    "conductorId": 1,
+    "fechaSalida": "2026-11-12T06:00",
+    "fechaLlegada": "2026-11-12T20:00",
+    "origen": "Córdoba",
+    "destino": "Mendoza",
+    "kilometros": 600
+}
+
+### Registrar viaje con vehículo inexistente (400)
+POST {{url}}/viajes
+Authorization: Bearer {{login.response.body.token}}
+Content-Type: application/json
+
+{
+    "vehiculoId": 9999,
+    "conductorId": 1,
+    "fechaSalida": "2026-11-10T08:00",
+    "fechaLlegada": "2026-11-10T18:30",
+    "origen": "La Rioja",
+    "destino": "Córdoba",
+    "kilometros": 450
+}
+
+### Registrar viaje con llegada anterior a la salida (400)
+POST {{url}}/viajes
+Authorization: Bearer {{login.response.body.token}}
+Content-Type: application/json
+
+{
+    "vehiculoId": 1,
+    "conductorId": 1,
+    "fechaSalida": "2026-11-10T18:30",
+    "fechaLlegada": "2026-11-10T08:00",
+    "origen": "La Rioja",
+    "destino": "Córdoba",
+    "kilometros": 450
+}
+
+### Registrar viaje con datos inválidos (400)
+POST {{url}}/viajes
+Authorization: Bearer {{login.response.body.token}}
+Content-Type: application/json
+
+{
+    "vehiculoId": "uno",
+    "conductorId": 0,
+    "fechaSalida": "10/11/2026",
+    "fechaLlegada": "mañana",
+    "origen": "",
+    "destino": "",
+    "kilometros": -10
+}
+
+### Historial completo de viajes
+GET {{url}}/viajes
+Authorization: Bearer {{login.response.body.token}}
+
+### Historial de viajes de un vehículo
+GET {{url}}/viajes?vehiculoId=1
+Authorization: Bearer {{login.response.body.token}}
+
+### Historial de viajes de un conductor
+GET {{url}}/viajes?conductorId=1
+Authorization: Bearer {{login.response.body.token}}
+
+### Historial con filtro inválido (400)
+GET {{url}}/viajes?vehiculoId=abc
+Authorization: Bearer {{login.response.body.token}}
+
+### Total de kilómetros de todos los viajes
+GET {{url}}/viajes/total-kilometros
+Authorization: Bearer {{login.response.body.token}}
+
+### Total de kilómetros por vehículo
+GET {{url}}/viajes/total-kilometros?vehiculoId=1
+Authorization: Bearer {{login.response.body.token}}
+
+### Total de kilómetros por conductor
+GET {{url}}/viajes/total-kilometros?conductorId=1
+Authorization: Bearer {{login.response.body.token}}
+
+### Detalle de viaje
+GET {{url}}/viajes/1
+Authorization: Bearer {{login.response.body.token}}
+
+### Detalle de viaje inexistente (404)
+GET {{url}}/viajes/9999
+Authorization: Bearer {{login.response.body.token}}
+
+### Listado sin token (401)
+GET {{url}}/viajes
+
+### Modificar viaje
+PUT {{url}}/viajes/1
+Authorization: Bearer {{login.response.body.token}}
+Content-Type: application/json
+
+{
+    "vehiculoId": 1,
+    "conductorId": 1,
+    "fechaSalida": "2026-11-10T08:00",
+    "fechaLlegada": "2026-11-10T19:00",
+    "origen": "La Rioja",
+    "destino": "Córdoba",
+    "kilometros": 455,
+    "observaciones": "Demora por tránsito"
+}
+
+### Modificar viaje inexistente (404)
+PUT {{url}}/viajes/9999
+Authorization: Bearer {{login.response.body.token}}
+Content-Type: application/json
+
+{
+    "vehiculoId": 1,
+    "conductorId": 1,
+    "fechaSalida": "2026-11-10T08:00",
+    "fechaLlegada": "2026-11-10T19:00",
+    "origen": "La Rioja",
+    "destino": "Córdoba",
+    "kilometros": 455
+}
+
+### Eliminar viaje
+DELETE {{url}}/viajes/2
+Authorization: Bearer {{login.response.body.token}}
+
+### Eliminar viaje inexistente (404)
+DELETE {{url}}/viajes/9999
+Authorization: Bearer {{login.response.body.token}}
