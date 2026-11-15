@@ -1,0 +1,85 @@
+@url=http://localhost:3000
+
+### Registrar usuario
+POST {{url}}/auth/register
+Content-Type: application/json
+
+{
+    "nombre": "Benjamin Gramajo",
+    "email": "benjamin@mail.com",
+    "password": "123456"
+}
+
+### Registro con email repetido 
+POST {{url}}/auth/register
+Content-Type: application/json
+
+{
+    "nombre": "Benjamin Gramajo",
+    "email": "benjamin@mail.com",
+    "password": "123456"
+}
+
+### Registro con email inválido 
+POST {{url}}/auth/register
+Content-Type: application/json
+
+{
+    "nombre": "Benjamin Gramajo",
+    "email": "esto-no-es-un-email",
+    "password": "123456"
+}
+
+### Registro con contraseña muy corta 
+POST {{url}}/auth/register
+Content-Type: application/json
+
+{
+    "nombre": "Benjamin Gramajo",
+    "email": "otro@mail.com",
+    "password": "123"
+}
+
+### Login correcto
+# @name login
+POST {{url}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "benjamin@mail.com",
+    "password": "123456"
+}
+
+### Login con contraseña incorrecta 
+POST {{url}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "benjamin@mail.com",
+    "password": "incorrecta"
+}
+
+### Login con email inexistente 
+POST {{url}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "noexiste@mail.com",
+    "password": "123456"
+}
+
+### Login con datos inválidos 
+POST {{url}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "no-es-email",
+    "password": ""
+}
+
+### Ruta protegida sin token 
+GET {{url}}/auth/perfil
+
+### Ruta protegida con token (ejecutar primero el login correcto)
+GET {{url}}/auth/perfil
+Authorization: Bearer {{login.response.body.token}}
