@@ -10,6 +10,8 @@ export async function conectarDB() {
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
+      // Devuelve los DECIMAL (kilometros, capacidad de carga) como numeros y no como texto
+      decimalNumbers: true,
     });
     console.log("Conectado a la base de datos");
   } catch (e) {
