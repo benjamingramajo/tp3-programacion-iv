@@ -7,6 +7,8 @@ import Registro from "./pages/Registro";
 import Panel from "./pages/Panel";
 import Vehiculos from "./pages/Vehiculos";
 import VehiculoFormulario from "./pages/VehiculoFormulario";
+import Conductores from "./pages/Conductores";
+import ConductorFormulario from "./pages/ConductorFormulario";
 
 export default function App() {
   return (
@@ -46,6 +48,30 @@ export default function App() {
             element={
               <RutaProtegida>
                 <VehiculoFormulario />
+              </RutaProtegida>
+            }
+          />
+          <Route
+            path="/conductores"
+            element={
+              <RutaProtegida>
+                <Conductores />
+              </RutaProtegida>
+            }
+          />
+          <Route
+            path="/conductores/nuevo"
+            element={
+              <RutaProtegida>
+                <ConductorFormulario />
+              </RutaProtegida>
+            }
+          />
+          <Route
+            path="/conductores/:id/editar"
+            element={
+              <RutaProtegida>
+                <ConductorFormulario />
               </RutaProtegida>
             }
           />
