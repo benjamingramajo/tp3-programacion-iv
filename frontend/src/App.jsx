@@ -5,6 +5,8 @@ import Inicio from "./pages/Inicio";
 import Login from "./pages/Login";
 import Registro from "./pages/Registro";
 import Panel from "./pages/Panel";
+import Vehiculos from "./pages/Vehiculos";
+import VehiculoFormulario from "./pages/VehiculoFormulario";
 
 export default function App() {
   return (
@@ -20,6 +22,30 @@ export default function App() {
             element={
               <RutaProtegida>
                 <Panel />
+              </RutaProtegida>
+            }
+          />
+          <Route
+            path="/vehiculos"
+            element={
+              <RutaProtegida>
+                <Vehiculos />
+              </RutaProtegida>
+            }
+          />
+          <Route
+            path="/vehiculos/nuevo"
+            element={
+              <RutaProtegida>
+                <VehiculoFormulario />
+              </RutaProtegida>
+            }
+          />
+          <Route
+            path="/vehiculos/:id/editar"
+            element={
+              <RutaProtegida>
+                <VehiculoFormulario />
               </RutaProtegida>
             }
           />

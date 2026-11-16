@@ -194,3 +194,112 @@ form button[type="submit"] {
     font-size: 1.9rem;
   }
 }
+
+/* ---- Listados y tablas ---- */
+.encabezado-seccion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.encabezado-seccion h1 {
+  margin: 0;
+}
+
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  padding: 1rem;
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+}
+
+.filtros label {
+  margin-top: 0;
+}
+
+.filtros button {
+  width: auto;
+  margin-top: 0;
+}
+
+.tabla-contenedor {
+  overflow-x: auto;
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 0.7rem 0.9rem;
+  text-align: left;
+  border-bottom: 1px solid var(--borde);
+  white-space: nowrap;
+}
+
+th {
+  background: var(--asfalto);
+  color: var(--blanco);
+  font-weight: 600;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+tbody tr:hover {
+  background: #fbf3dd;
+}
+
+.acciones {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.vacio {
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--asfalto-claro);
+  background: var(--blanco);
+  border: 1px dashed var(--borde);
+  border-radius: var(--radio);
+}
+
+.boton-claro {
+  color: var(--asfalto);
+  background: var(--blanco);
+  border-color: var(--borde);
+}
+
+.boton-claro:hover {
+  background: var(--fondo);
+  border-color: var(--asfalto-claro);
+}
+
+.boton-chico {
+  padding: 0.3rem 0.7rem;
+  font-size: 0.875rem;
+}
+
+.boton-peligro {
+  color: var(--blanco);
+  background: var(--error);
+  border-color: var(--error);
+}
+
+.boton-peligro:hover {
+  background: #8a1a10;
+  border-color: #8a1a10;
+}
