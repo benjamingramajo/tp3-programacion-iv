@@ -1,15 +1,31 @@
-import { useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import RutaProtegida from "./components/RutaProtegida";
+import Inicio from "./pages/Inicio";
+import Login from "./pages/Login";
+import Registro from "./pages/Registro";
+import Panel from "./pages/Panel";
 
-function App() {
-  const [count, setCount] = useState(0);
-
+export default function App() {
   return (
-    <div className="App">
-      <h1>Counter: {count}</h1>
-      <button onClick={() => setCount(count + 1)}>Increment</button>
-      <button onClick={() => setCount(count - 1)}>Decrement</button>
-    </div>
+    <>
+      <Navbar />
+      <main className="contenido">
+        <Routes>
+          <Route path="/" element={<Inicio />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/registro" element={<Registro />} />
+          <Route
+            path="/panel"
+            element={
+              <RutaProtegida>
+                <Panel />
+              </RutaProtegida>
+            }
+          />
+          <Route path="*" element={<p>Página no encontrada</p>} />
+        </Routes>
+      </main>
+    </>
   );
 }
-
-export default App;
