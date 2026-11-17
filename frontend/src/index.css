@@ -303,3 +303,73 @@ tbody tr:hover {
   background: #8a1a10;
   border-color: #8a1a10;
 }
+
+/* ---- Viajes y panel ---- */
+form select,
+form textarea {
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  font: inherit;
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+}
+
+form textarea {
+  resize: vertical;
+}
+
+.filtros select {
+  min-width: 220px;
+  padding: 0.55rem 0.7rem;
+  font: inherit;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+}
+
+.resumen {
+  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  background: #fbf3dd;
+  border-left: 4px solid var(--senal);
+  border-radius: var(--radio);
+}
+
+.celda-larga {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.accesos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.acceso {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1.25rem;
+  text-decoration: none;
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-top: 4px solid var(--senal);
+  border-radius: var(--radio);
+}
+
+.acceso:hover {
+  border-color: var(--asfalto-claro);
+  border-top-color: var(--senal);
+}
+
+.acceso strong {
+  font-size: 1.15rem;
+}
+
+.acceso span {
+  color: var(--asfalto-claro);
+  font-size: 0.95rem;
+}

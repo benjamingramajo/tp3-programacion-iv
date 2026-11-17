@@ -22,6 +22,7 @@ export default function Navbar() {
             <Link to="/panel">Panel</Link>
             <Link to="/vehiculos">Vehículos</Link>
             <Link to="/conductores">Conductores</Link>
+            <Link to="/viajes">Viajes</Link>
             <span className="navbar-usuario">{sesion.nombre}</span>
             <button type="button" className="boton boton-secundario" onClick={salir}>
               Cerrar sesión

@@ -9,6 +9,8 @@ import Vehiculos from "./pages/Vehiculos";
 import VehiculoFormulario from "./pages/VehiculoFormulario";
 import Conductores from "./pages/Conductores";
 import ConductorFormulario from "./pages/ConductorFormulario";
+import Viajes from "./pages/Viajes";
+import ViajeFormulario from "./pages/ViajeFormulario";
 
 export default function App() {
   return (
@@ -72,6 +74,30 @@ export default function App() {
             element={
               <RutaProtegida>
                 <ConductorFormulario />
+              </RutaProtegida>
+            }
+          />
+          <Route
+            path="/viajes"
+            element={
+              <RutaProtegida>
+                <Viajes />
+              </RutaProtegida>
+            }
+          />
+          <Route
+            path="/viajes/nuevo"
+            element={
+              <RutaProtegida>
+                <ViajeFormulario />
+              </RutaProtegida>
+            }
+          />
+          <Route
+            path="/viajes/:id/editar"
+            element={
+              <RutaProtegida>
+                <ViajeFormulario />
               </RutaProtegida>
             }
           />
