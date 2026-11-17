@@ -12,3 +12,10 @@ export function formatearFecha(valor) {
 export function fechaParaInput(valor) {
   return valor ? String(valor).slice(0, 10) : "";
 }
+
+// "2026-03-15T08:30" -> "15/03/2026 08:30"
+export function formatearFechaHora(valor) {
+  if (!valor) return "";
+  const texto = String(valor);
+  return `${formatearFecha(texto)} ${texto.slice(11, 16)}`;
+}
